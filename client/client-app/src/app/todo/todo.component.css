@@ -1,0 +1,10 @@
+.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.todo-container {
+  width: 400px;
+  margin: auto;
+  text-align: center;
+}

@@ -1,7 +1,10 @@
+// server/server.js
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+
+import taskRoutes from "./routes/tasks.js"; // use your cleaned-up router
 
 dotenv.config();
 
@@ -14,9 +17,8 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
 
-app.get("/", (req, res) => {
-  res.send("API running");
-});
+// Use router
+app.use("/api/tasks", taskRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
