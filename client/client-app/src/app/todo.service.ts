@@ -8,6 +8,7 @@ export interface Task {
   title: string;
   completed?: boolean;
   createdAt?: string;
+  editing?: boolean;
 }
 
 @Injectable({
@@ -33,5 +34,8 @@ export class TodoService {
 
   deleteTask(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+  updateTask(id: string, updates: Partial<Task>): Observable<Task> {
+    return this.http.put<Task>(`${this.apiUrl}/${id}`, updates);
   }
 }

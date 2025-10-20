@@ -1,11 +1,83 @@
-<div>
-  <input type="text" [(ngModel)]="taskName" placeholder="Enter task" />
-  <button (click)="addTask()">Add</button>
-</div>
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-lg p-4">
+    <h2 class="text-xl font-bold mb-6">Todo App</h2>
+    <ul>
+      <li>
+        <button
+          (click)="filter = 'all'"
+          class="w-full text-left py-2 hover:bg-gray-200 rounded"
+        >
+          All
+        </button>
+      </li>
+      <li>
+        <button
+          (click)="filter = 'active'"
+          class="w-full text-left py-2 hover:bg-gray-200 rounded"
+        >
+          Active
+        </button>
+      </li>
+      <li>
+        <button
+          (click)="filter = 'completed'"
+          class="w-full text-left py-2 hover:bg-gray-200 rounded"
+        >
+          Completed
+        </button>
+      </li>
+    </ul>
+  </aside>
 
-<ul>
-  <li *ngFor="let task of tasks">
-    {{ task.title }}
-    <button (click)="removeTask(task._id!)">Remove</button>
-  </li>
-</ul>
+  <!-- Main content -->
+  <main class="flex-1 p-6 overflow-auto">
+    <div class="mb-4 flex">
+      <input
+        type="text"
+        [(ngModel)]="taskName"
+        placeholder="Enter task"
+        class="flex-1 p-2 rounded-l border border-gray-300"
+      />
+      <button
+        (click)="addTask()"
+        class="bg-blue-500 text-white px-4 rounded-r hover:bg-blue-600 transition"
+      >
+        Add
+      </button>
+    </div>
+
+    <ul>
+      <li
+        *ngFor="let task of filteredTasks()"
+        class="bg-white p-4 rounded shadow mb-2 flex items-center justify-between transition hover:scale-105"
+      >
+        <div class="flex items-center space-x-4">
+          <input
+            title="task"
+            type="checkbox"
+            [(ngModel)]="task.completed"
+            (change)="toggleCompleted(task)"
+          />
+          <span
+            [class.line-through]="task.completed"
+            [class.opacity-50]="task.completed"
+          >
+            {{ task.title }}
+          </span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <small class="text-gray-400">{{
+            task.createdAt | date : "short"
+          }}</small>
+          <button
+            (click)="removeTask(task._id!)"
+            class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition"
+          >
+            Delete
+          </button>
+        </div>
+      </li>
+    </ul>
+  </main>
+</div>
