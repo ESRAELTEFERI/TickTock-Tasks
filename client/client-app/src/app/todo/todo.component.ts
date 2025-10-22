@@ -13,6 +13,7 @@ import { finalize } from 'rxjs/operators';
 export class TodoComponent {
   tasks: Task[] = [];
   taskName: string = '';
+  collapsed: boolean = false;
 
   constructor(private todoService: TodoService) {
     this.loadTasks();

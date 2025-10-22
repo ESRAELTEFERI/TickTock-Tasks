@@ -1,17 +1,43 @@
 <div class="flex h-screen bg-gray-100">
   <!-- Sidebar -->
-  <aside class="w-64 bg-white shadow-lg p-4">
-    <!-- Animated multicolor title -->
-    <h2 class="text-xl font-bold mb-6 flex items-center space-x-2">
-      <!-- Spinning multicolor icon -->
-      <i class="fas fa-link text-2xl animate-spin text-pink-500"></i>
-      <!-- Gradient text for the title -->
-      <span
-        class="bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-purple-500 to-blue-500"
+  <aside
+    [ngClass]="{ 'w-64': !collapsed, 'w-20': collapsed }"
+    class="bg-white shadow-lg p-4 transition-all duration-300"
+  >
+    <!-- Sidebar header with collapse button -->
+    <div class="flex items-center justify-between mb-6">
+      <h2
+        *ngIf="!collapsed"
+        class="text-xl font-bold flex items-center space-x-2"
       >
-        Quick Links
-      </span>
-    </h2>
+        <i class="fas fa-link text-2xl animate-spin text-pink-500"></i>
+        <span
+          class="bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-purple-500 to-blue-500"
+        >
+          Quick Links
+        </span>
+      </h2>
+
+      <button
+        (click)="collapsed = !collapsed"
+        class="relative text-gray-600 transition group p-2 rounded hover:bg-gray-100"
+        title="Toggle Sidebar"
+      >
+        <!-- Default icon (play) -->
+        <i
+          class="fas fa-link text-2xl animate-spin text-pink-500 transition-opacity duration-200 group-hover:opacity-0"
+          *ngIf="collapsed"
+        ></i>
+        <!-- Hover icon (chevron right) -->
+        <i
+          class="fas fa-chevron-right absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+          *ngIf="collapsed"
+        ></i>
+
+        <!-- When expanded, show chevron left -->
+        <i class="fas fa-chevron-left" *ngIf="!collapsed"></i>
+      </button>
+    </div>
 
     <ul>
       <li>
@@ -25,7 +51,7 @@
           class="w-full text-left px-4 py-4 rounded flex items-center space-x-2 transition-all duration-300"
         >
           <i class="fas fa-list"></i>
-          <span>All</span>
+          <span *ngIf="!collapsed">All</span>
         </button>
       </li>
       <li>
@@ -39,7 +65,7 @@
           class="w-full text-left px-4 py-4 rounded flex items-center space-x-2 transition-all duration-300"
         >
           <i class="fas fa-play"></i>
-          <span>Active</span>
+          <span *ngIf="!collapsed">Active</span>
         </button>
       </li>
       <li>
@@ -53,7 +79,7 @@
           class="w-full text-left px-4 py-4 rounded flex items-center space-x-2 transition-all duration-300"
         >
           <i class="fas fa-check-circle"></i>
-          <span>Completed</span>
+          <span *ngIf="!collapsed">Completed</span>
         </button>
       </li>
     </ul>
@@ -67,6 +93,7 @@
         [(ngModel)]="taskName"
         placeholder="Enter task"
         class="flex-1 p-2 rounded-l border border-gray-300"
+        (keydown.enter)="addTask()"
       />
       <button
         (click)="addTask()"
@@ -81,7 +108,7 @@
         *ngFor="let task of filteredTasks()"
         class="bg-white p-4 rounded shadow mb-2 flex items-center justify-between"
       >
-        <div class="flex items-center space-x-4">
+        <!-- <div class="flex items-center space-x-4">
           <input
             title="task"
             type="checkbox"
@@ -100,12 +127,54 @@
             task.createdAt | date : "short"
           }}</small>
           <button
-            (click)="saveEdit(task._id!)"
+            (click)="saveEdit(task)"
+            class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition"
+            title="Edit Task"
+          >
+            <i class="fas fa-edit"></i>
+          </button> -->
+        <div class="flex items-center space-x-4">
+          <input
+            title="task"
+            type="checkbox"
+            [(ngModel)]="task.completed"
+            (change)="toggleCompleted(task)"
+          />
+
+          <!-- Display or edit -->
+          <span
+            *ngIf="!task.editing"
+            [class.line-through]="task.completed"
+            [class.opacity-50]="task.completed"
+          >
+            {{ task.title }}
+          </span>
+
+          <input
+            *ngIf="task.editing"
+            [(ngModel)]="task.title"
+            title="edit"
+            (blur)="saveEdit(task)"
+            (keydown.enter)="saveEdit(task)"
+            class="border p-1 rounded flex-1"
+            autofocus
+          />
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <small class="text-gray-400">{{
+            task.createdAt | date : "short"
+          }}</small>
+
+          <!-- Edit button -->
+          <button
+            (click)="task.editing = true"
             class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition"
             title="Edit Task"
           >
             <i class="fas fa-edit"></i>
           </button>
+
           <div class="flex items-center space-x-2">
             <button
               (click)="removeTask(task._id!)"
