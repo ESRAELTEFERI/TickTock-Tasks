@@ -1,2 +1,36 @@
-<h1>Todo App</h1>
-<app-todo></app-todo>
+<!-- <h1>Todo App</h1>
+<app-todo></app-todo> -->
+
+<!-- Top Navigation Bar -->
+<header
+  class="bg-gradient-to-r from-teal-400 via-blue-400 to-purple-400 text-white shadow-md px-6 py-4"
+>
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <!-- Title + Icon -->
+    <div class="flex items-center space-x-2">
+      <!-- Optional: keep icon white or gradient -->
+      <i class="fas fa-tasks text-2xl"></i>
+
+      <div>
+        <h1 class="text-2xl font-bold">TickTock Tasks</h1>
+        <p class="text-sm text-white/80">
+          Beat procrastination one task at a time
+        </p>
+      </div>
+    </div>
+
+    <!-- Optional Navigation -->
+    <nav>
+      <ul class="flex space-x-4">
+        <li><a href="#" class="hover:text-gray-200">Home</a></li>
+        <li><a href="#" class="hover:text-gray-200">About</a></li>
+        <li><a href="#" class="hover:text-gray-200">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main>
+  <app-todo></app-todo>
+</main>
