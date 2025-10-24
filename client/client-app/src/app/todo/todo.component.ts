@@ -3,6 +3,7 @@ import { TodoService, Task } from '../todo.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-todo',
@@ -14,13 +15,20 @@ export class TodoComponent {
   tasks: Task[] = [];
   taskName: string = '';
   collapsed: boolean = false;
+  filter: string = 'all';
+  loading = false;
+  user: any = null;
 
-  constructor(private todoService: TodoService) {
+  constructor(
+    private todoService: TodoService,
+    private authService: AuthService
+  ) {
     this.loadTasks();
+
+    this.user = this.authService.getUser() || { name: 'Guest User', email: '' };
   }
 
-  loading = false;
-
+  //-------------------- tasks logic ----------
   toggleCompleted(task: any) {
     this.todoService
       .updateTask(task._id, { completed: task.completed })
@@ -28,8 +36,6 @@ export class TodoComponent {
         this.loadTasks();
       });
   }
-
-  filter: string = 'all';
 
   filteredTasks() {
     if (this.filter === 'completed') {
@@ -80,5 +86,11 @@ export class TodoComponent {
     this.todoService.deleteTask(id).subscribe(() => {
       this.tasks = this.tasks.filter((task) => task._id !== id);
     });
+  }
+
+  logout() {
+    this.authService.logout();
+    localStorage.removeItem('user');
+    window.location.reload(); // reload or navigate to login
   }
 }

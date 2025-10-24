@@ -2,87 +2,108 @@
   <!-- Sidebar -->
   <aside
     [ngClass]="{ 'w-64': !collapsed, 'w-20': collapsed }"
-    class="bg-white shadow-lg p-4 transition-all duration-300"
+    class="bg-white shadow-lg p-4 transition-all duration-300 flex flex-col h-screen relative"
   >
-    <!-- Sidebar header with collapse button -->
-    <div class="flex items-center justify-between mb-6">
-      <h2
-        *ngIf="!collapsed"
-        class="text-xl font-bold flex items-center space-x-2"
-      >
-        <i class="fas fa-link text-2xl animate-spin text-pink-500"></i>
-        <span
-          class="bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-purple-500 to-blue-500"
+    <!-- Scrollable content -->
+    <div class="flex-1 overflow-y-auto">
+      <!-- Sidebar header -->
+      <div class="flex items-center justify-between mb-6">
+        <h2
+          *ngIf="!collapsed"
+          class="text-xl font-bold flex items-center space-x-2"
         >
-          Quick Links
-        </span>
-      </h2>
+          <i class="fas fa-link text-2xl animate-spin text-pink-500"></i>
+          <span
+            class="bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-purple-500 to-blue-500"
+          >
+            Quick Links
+          </span>
+        </h2>
 
-      <button
-        (click)="collapsed = !collapsed"
-        class="relative text-gray-600 transition group p-2 rounded hover:bg-gray-100"
-        title="Toggle Sidebar"
-      >
-        <!-- Default icon (play) -->
-        <i
-          class="fas fa-link text-2xl animate-spin text-pink-500 transition-opacity duration-200 group-hover:opacity-0"
-          *ngIf="collapsed"
-        ></i>
-        <!-- Hover icon (chevron right) -->
-        <i
-          class="fas fa-chevron-right absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-          *ngIf="collapsed"
-        ></i>
+        <button
+          (click)="collapsed = !collapsed"
+          class="relative text-gray-600 transition group p-2 rounded hover:bg-gray-100"
+          title="Toggle Sidebar"
+        >
+          <i
+            class="fas fa-link text-2xl animate-spin text-pink-500 transition-opacity duration-200 group-hover:opacity-0"
+            *ngIf="collapsed"
+          ></i>
+          <i
+            class="fas fa-chevron-right absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+            *ngIf="collapsed"
+          ></i>
+          <i class="fas fa-chevron-left" *ngIf="!collapsed"></i>
+        </button>
+      </div>
 
-        <!-- When expanded, show chevron left -->
-        <i class="fas fa-chevron-left" *ngIf="!collapsed"></i>
-      </button>
+      <!-- Sidebar buttons -->
+      <ul>
+        <li>
+          <button
+            (click)="filter = 'all'"
+            [ngClass]="{
+              'bg-gradient-to-r from-teal-400 via-purple-400 to-blue-400 text-white':
+                filter === 'all',
+              'hover:bg-gray-100 text-gray-700': filter !== 'all'
+            }"
+            class="w-full text-left px-4 py-4 rounded flex items-center space-x-2 transition-all duration-300"
+          >
+            <i class="fas fa-list"></i>
+            <span *ngIf="!collapsed">All</span>
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="filter = 'active'"
+            [ngClass]="{
+              'bg-gradient-to-r from-teal-400 via-purple-400 to-blue-400 text-white':
+                filter === 'active',
+              'hover:bg-gray-100 text-gray-700': filter !== 'active'
+            }"
+            class="w-full text-left px-4 py-4 rounded flex items-center space-x-2 transition-all duration-300"
+          >
+            <i class="fas fa-play"></i>
+            <span *ngIf="!collapsed">Active</span>
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="filter = 'completed'"
+            [ngClass]="{
+              'bg-gradient-to-r from-teal-400 via-purple-400 to-blue-400 text-white':
+                filter === 'completed',
+              'hover:bg-gray-100 text-gray-700': filter !== 'completed'
+            }"
+            class="w-full text-left px-4 py-4 rounded flex items-center space-x-2 transition-all duration-300"
+          >
+            <i class="fas fa-check-circle"></i>
+            <span *ngIf="!collapsed">Completed</span>
+          </button>
+        </li>
+      </ul>
     </div>
 
-    <ul>
-      <li>
-        <button
-          (click)="filter = 'all'"
-          [ngClass]="{
-            'bg-gradient-to-r from-teal-400 via-purple-400 to-blue-400 text-white':
-              filter === 'all',
-            'hover:bg-gray-100 text-gray-700': filter !== 'all'
-          }"
-          class="w-full text-left px-4 py-4 rounded flex items-center space-x-2 transition-all duration-300"
-        >
-          <i class="fas fa-list"></i>
-          <span *ngIf="!collapsed">All</span>
-        </button>
-      </li>
-      <li>
-        <button
-          (click)="filter = 'active'"
-          [ngClass]="{
-            'bg-gradient-to-r from-teal-400 via-purple-400 to-blue-400 text-white':
-              filter === 'active',
-            'hover:bg-gray-100 text-gray-700': filter !== 'active'
-          }"
-          class="w-full text-left px-4 py-4 rounded flex items-center space-x-2 transition-all duration-300"
-        >
-          <i class="fas fa-play"></i>
-          <span *ngIf="!collapsed">Active</span>
-        </button>
-      </li>
-      <li>
-        <button
-          (click)="filter = 'completed'"
-          [ngClass]="{
-            'bg-gradient-to-r from-teal-400 via-purple-400 to-blue-400 text-white':
-              filter === 'completed',
-            'hover:bg-gray-100 text-gray-700': filter !== 'completed'
-          }"
-          class="w-full text-left px-4 py-4 rounded flex items-center space-x-2 transition-all duration-300"
-        >
-          <i class="fas fa-check-circle"></i>
-          <span *ngIf="!collapsed">Completed</span>
-        </button>
-      </li>
-    </ul>
+    <!-- Fixed user info at bottom -->
+    <div
+      class="border-t border-gray-200 pt-4 bg-white sticky bottom-0 left-0 right-0"
+      *ngIf="user"
+    >
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-user-circle text-3xl text-gray-500"></i>
+        <div *ngIf="!collapsed" class="flex flex-col">
+          <span class="font-medium">{{ user.name }}</span>
+          <span class="text-xs text-gray-500">{{ user.email }}</span>
+        </div>
+      </div>
+      <button
+        (click)="logout()"
+        class="mt-3 w-full bg-red-500 text-white py-1 rounded hover:bg-red-600 transition"
+        *ngIf="!collapsed"
+      >
+        Logout
+      </button>
+    </div>
   </aside>
 
   <!-- Main content -->

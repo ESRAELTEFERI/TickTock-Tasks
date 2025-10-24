@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { TodoComponent } from './todo/todo.component';
+// import { TodoComponent } from './todo/todo.component';
+// import { AuthComponent } from './auth/auth.component';
+import { AuthService } from './auth.service';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true, // <-- important
-  imports: [TodoComponent], // Import child standalone components here
+  imports: [CommonModule, RouterModule],
 })
 export class AppComponent {
-  title = 'todo-app';
+  constructor(public auth: AuthService) {}
 }

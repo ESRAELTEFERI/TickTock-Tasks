@@ -3,7 +3,7 @@
 
 <!-- Top Navigation Bar -->
 <header
-  class="bg-gradient-to-r from-teal-400 via-blue-400 to-purple-400 text-white shadow-md px-6 py-4"
+  class="bg-gradient-to-r from-teal-400 via-purple-400 to-blue-400 text-white shadow-md px-6 py-4"
 >
   <div class="max-w-7xl mx-auto flex justify-between items-center">
     <!-- Title + Icon -->
@@ -22,9 +22,12 @@
     <!-- Optional Navigation -->
     <nav>
       <ul class="flex space-x-4">
-        <li><a href="#" class="hover:text-gray-200">Home</a></li>
+        <!-- <li><a href="#" class="hover:text-gray-200">Home</a></li>
         <li><a href="#" class="hover:text-gray-200">About</a></li>
-        <li><a href="#" class="hover:text-gray-200">Contact</a></li>
+        <li><a href="#" class="hover:text-gray-200">Contact</a></li> -->
+        <li><a routerLink="/home" class="hover:text-gray-200">Home</a></li>
+        <li><a routerLink="/todo" class="hover:text-gray-200">Todo</a></li>
+        <li><a routerLink="/auth" class="hover:text-gray-200">Auth</a></li>
       </ul>
     </nav>
   </div>
@@ -32,5 +35,5 @@
 
 <!-- Main Content -->
 <main>
-  <app-todo></app-todo>
+  <router-outlet></router-outlet>
 </main>
