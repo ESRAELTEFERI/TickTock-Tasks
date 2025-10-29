@@ -1,29 +1,27 @@
-// server/routes/tasks.ts
 import express from "express";
 import Task from "../models/Task.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
+// ✅ Protect all routes with this middleware
+router.use(authMiddleware);
+
 // GET /api/tasks
 router.get("/", async (req, res) => {
-  try {
-    const tasks = await Task.find();
-    res.json(tasks);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+  const tasks = await Task.find({ userId: req.userId });
+  res.json(tasks);
 });
 
 // POST /api/tasks
 router.post("/", async (req, res) => {
-  console.log("Incoming POST body:", req.body);
-  const task = new Task({ title: req.body.title });
-  try {
-    const newTask = await task.save();
-    res.status(201).json(newTask);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
+  const task = new Task({
+    title: req.body.title,
+    completed: false,
+    userId: req.userId,
+  });
+  await task.save();
+  res.json(task);
 });
 
 // PUT /api/tasks/:id

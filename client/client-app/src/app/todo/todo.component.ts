@@ -90,7 +90,5 @@ export class TodoComponent {
 
   logout() {
     this.authService.logout();
-    localStorage.removeItem('user');
-    window.location.reload(); // reload or navigate to login
   }
 }

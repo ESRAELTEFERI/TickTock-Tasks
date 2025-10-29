@@ -84,14 +84,14 @@
       </ul>
     </div>
 
-    <!-- Fixed user info at bottom -->
+    <!-- Fixed userinfo at bottom -->
     <div
-      class="border-t border-gray-200 pt-4 bg-white sticky bottom-0 left-0 right-0"
+      class="fixed bottom-2 left-5 border-t border-gray-200 pt-4 bg-white z-50"
       *ngIf="user"
     >
       <div class="flex items-center space-x-3">
         <i class="fas fa-user-circle text-3xl text-gray-500"></i>
-        <div *ngIf="!collapsed" class="flex flex-col">
+        <div *ngIf="!collapsed" class="w-40 flex flex-col">
           <span class="font-medium">{{ user.name }}</span>
           <span class="text-xs text-gray-500">{{ user.email }}</span>
         </div>

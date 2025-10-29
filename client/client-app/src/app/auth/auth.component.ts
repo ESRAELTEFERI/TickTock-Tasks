@@ -2,6 +2,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // <-- for ngModel
 import { CommonModule } from '@angular/common'; // <-- for *ngIf
+import { Router } from '@angular/router'; // ✅ import Router
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -16,12 +17,12 @@ export class AuthComponent {
   email = '';
   password = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   submit() {
     if (this.isLogin) {
       this.authService.login(this.email, this.password).subscribe({
-        next: () => location.reload(),
+        next: () => this.router.navigate(['/todo']),
         error: (err) => alert(err.error.message || 'Login failed'),
       });
     } else {
