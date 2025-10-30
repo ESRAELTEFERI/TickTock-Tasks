@@ -13,7 +13,8 @@ const app = express();
 // app.use(cors());
 app.use(
   cors({
-    origin: ["http://localhost:4200", "https://your-production-url.com"],
+    // "https://your-production-url.com
+    origin: "http://localhost:4200",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
