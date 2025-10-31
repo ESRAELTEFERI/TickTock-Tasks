@@ -16,7 +16,7 @@ app.use(
     // "https://your-production-url.com
     origin: [
       "http://localhost:4200",
-      "https://ticktock-pasca-388020.netlify.app/",
+      "https://ticktock-pasca-388020.netlify.app",
     ],
 
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
