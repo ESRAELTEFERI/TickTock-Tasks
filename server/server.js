@@ -14,7 +14,11 @@ const app = express();
 app.use(
   cors({
     // "https://your-production-url.com
-    origin: "http://localhost:4200",
+    origin: [
+      "http://localhost:4200",
+      "https://ticktock-pasca-388020.netlify.app/",
+    ],
+
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
