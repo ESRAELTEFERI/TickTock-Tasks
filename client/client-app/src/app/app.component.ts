@@ -12,5 +12,6 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, RouterModule],
 })
 export class AppComponent {
-  constructor(public auth: AuthService) {}
+  constructor(public auth: AuthService) { }
+  title = 'TickTock Tasks';
 }
