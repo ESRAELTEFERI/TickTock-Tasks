@@ -16,14 +16,18 @@ export class AuthComponent {
   name = '';
   email = '';
   password = '';
+  loading = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   submit() {
+
+    this.loading = true;
+
     if (this.isLogin) {
       this.authService.login(this.email, this.password).subscribe({
-        next: () => this.router.navigate(['/todo']),
-        error: (err) => alert(err.error.message || 'Login failed'),
+        next: () => { this.loading = false; this.router.navigate(['/todo']) },
+        error: (err) => { this.loading = false; alert(err.error.message || 'Login failed') },
       });
     } else {
       this.authService

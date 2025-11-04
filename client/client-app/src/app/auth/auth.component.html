@@ -1,54 +1,36 @@
-<div
-  class="bg-gradient-to-br from-teal-400 via-gray-100 to-white-500 flex flex-col items-center justify-center"
->
+<div class="bg-gradient-to-br from-teal-400 via-gray-100 to-white-500 flex flex-col items-center justify-center">
   <div class="max-w-md mx-auto mt-5 p-20 rounded">
     <h2 class="text-xl font-bold mb-6">{{ isLogin ? "Login" : "Register" }}</h2>
 
-    <form (ngSubmit)="submit()">
+    <div *ngIf="loading" class="flex flex-col items-center py-10">
+      <div class="animate-spin rounded-full h-10 w-10 border-4 border-blue-500 border-t-transparent"></div>
+      <p class="mt-4 text-sm">Just a moment</p>
+    </div>
+
+    <form *ngIf="!loading" (ngSubmit)="submit()">
       <div *ngIf="!isLogin" class="mb-4">
-        <input
-          type="text"
-          placeholder="Name"
-          [(ngModel)]="name"
-          name="name"
-          class="w-full border p-2 rounded"
-        />
+        <input type="text" placeholder="Name" [(ngModel)]="name" name="name" class="w-full border p-2 rounded" />
       </div>
 
       <div class="mb-4">
-        <input
-          type="email"
-          placeholder="Email"
-          [(ngModel)]="email"
-          name="email"
-          class="w-full border p-2 rounded"
-        />
+        <input type="email" placeholder="Email" [(ngModel)]="email" name="email" class="w-full border p-2 rounded" />
       </div>
 
       <div class="mb-4">
-        <input
-          type="password"
-          placeholder="Password"
-          [(ngModel)]="password"
-          name="password"
-          class="w-full border p-2 rounded"
-        />
+        <input type="password" placeholder="Password" [(ngModel)]="password" name="password"
+          class="w-full border p-2 rounded" />
       </div>
 
-      <button
-        type="submit"
-        class="px-4 py-2 bg-gradient-to-r from-blue-900 via-blue-500 to-blue-200 text-white font-semibold rounded-xl hover:opacity-90 transition"
-      >
+      <button type="submit"
+        class="px-4 py-2 bg-gradient-to-r from-blue-900 via-blue-500 to-blue-200 text-white font-semibold rounded-xl hover:opacity-90 transition">
         {{ isLogin ? "Login" : "Register" }}
       </button>
     </form>
 
     <p class="mt-4 text-sm">
       {{ isLogin ? "Don't have an account?" : "Already have an account?" }}
-      <button
-        (click)="isLogin = !isLogin"
-        class="bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-purple-500 to-blue-500 border-b border-blue-500 hover:underline font-semibold ml-1"
-      >
+      <button (click)="isLogin = !isLogin"
+        class="bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-purple-500 to-blue-500 border-b border-blue-500 hover:underline font-semibold ml-1">
         {{ isLogin ? "Register" : "Login" }}
       </button>
     </p>
